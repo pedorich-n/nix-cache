@@ -21,13 +21,19 @@ output "r2_bucket_region" {
 
 output "r2_bucket_access_key_id" {
   description = "API token for R2 access. Used as the S3 Access Key ID"
-  value       = cloudflare_api_token.bucket_r2_read_write.id
+  value       = local.r2_bucket_access_key_id
   sensitive   = true
 }
 
 # See https://developers.cloudflare.com/r2/api/tokens/#get-s3-api-credentials-from-an-api-token
 output "r2_bucket_access_key_secret" {
-  value       = sha256(cloudflare_api_token.bucket_r2_read_write.value)
+  value       = local.r2_bucket_access_key_secret
   sensitive   = true
   description = "SHA256 hash of the R2 API token. Used as the S3 Secret Access Key"
+}
+
+output "nix_signing_key_base64" {
+  description = "Base64-encoded Nix signing key for cache signing"
+  value       = local.nix_signing_key_base64
+  sensitive   = true
 }

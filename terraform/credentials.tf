@@ -1,30 +1,3 @@
-resource "cloudflare_r2_bucket" "bucket" {
-  account_id = var.cloudflare_account_id
-  name       = "niks3-cache"
-  location   = "apac"
-}
-
-resource "cloudflare_r2_managed_domain" "managed_domain" {
-  account_id  = var.cloudflare_account_id
-  bucket_name = cloudflare_r2_bucket.bucket.name
-  enabled     = false
-}
-
-resource "cloudflare_r2_bucket_cors" "cors" {
-  account_id  = var.cloudflare_account_id
-  bucket_name = cloudflare_r2_bucket.bucket.name
-
-  rules = [{
-    allowed = {
-      methods = ["GET", "PUT", "POST", "DELETE", "HEAD"]
-      origins = ["*"] // TODO: restrict this?
-    }
-    id              = "${cloudflare_r2_bucket.bucket.name}-default"
-    max_age_seconds = 3600
-  }]
-}
-
-
 resource "cloudflare_api_token" "bucket_r2_read_write" {
   name   = "${cloudflare_r2_bucket.bucket.name}-RW"
   status = "active"
@@ -45,4 +18,29 @@ resource "cloudflare_api_token" "bucket_r2_read_write" {
       "com.cloudflare.edge.r2.bucket.${var.cloudflare_account_id}_default_${cloudflare_r2_bucket.bucket.name}" = "*"
     })
   }]
+}
+
+resource "onepassword_item" "cloudflare_r2" {
+  vault    = data.onepassword_vault.homelab.uuid
+  title    = "Cloudflare_R2_Nix_Cache"
+  category = "secure_note"
+
+  tags = ["Managed By Terraform"]
+
+  section {
+    label = "S3_API"
+
+    field {
+      label = "access_key_id"
+      type  = "STRING"
+      value = local.r2_bucket_access_key_id
+    }
+
+    field {
+      label = "access_key_secret"
+      type  = "CONCEALED"
+      value = local.r2_bucket_access_key_secret
+    }
+  }
+
 }
