@@ -1,0 +1,41 @@
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+
+app = '${app_name}'
+primary_region = 'nrt'
+kill_signal = 'SIGTERM'
+kill_timeout = 30
+swap_size_mb = 512
+
+[build]
+image = 'ghcr.io/mic92/niks3:v1.4.0'
+
+[env]
+NIKS3_HTTP_ADDR = ':5751'
+NIKS3_S3_USE_SSL = 'true'
+NIKS3_S3_CONCURRENCY = '100'
+NIKS3_S3_REGION = '${r2_bucket_region}'
+NIKS3_ENABLE_READ_PROXY = 'false'
+NIKS3_SIGN_KEY_PATHS = '/run/secrets/niks3-signing-key'
+NIKS3_OIDC_CONFIG = '/run/secrets/niks3-oidc-config.json'
+
+[[files]]
+guest_path = "/run/secrets/niks3-signing-key"
+secret_name = "NIKS3_SIGNING_KEY_FILE_BASE64"
+
+[[files]]
+guest_path = "/run/secrets/niks3-oidc-config.json"
+secret_name = "NIKS3_OIDC_CONFIG_BASE64"
+
+[http_service]
+internal_port = 5751
+force_https = true
+auto_stop_machines = 'stop'
+auto_start_machines = true
+min_machines_running = 0
+processes = ['app']
+
+[[vm]]
+memory = '256mb'
+memory_mb = 256
+cpu_kind = 'shared'
+cpus = 1

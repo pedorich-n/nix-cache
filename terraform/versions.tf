@@ -1,5 +1,10 @@
 terraform {
   required_providers {
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.8"
+    }
+
     cloudflare = {
       source  = "cloudflare/cloudflare"
       version = "~> 5"

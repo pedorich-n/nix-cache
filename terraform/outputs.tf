@@ -17,7 +17,7 @@ output "r2_bucket_name" {
 # See https://developers.cloudflare.com/r2/api/s3/api/#bucket-region
 output "r2_bucket_region" {
   description = "Region of the created R2 bucket"
-  value       = "auto"
+  value       = local.r2_bucket_region
 }
 
 output "r2_bucket_access_key_id" {
@@ -37,4 +37,22 @@ output "nix_signing_key_base64" {
   description = "Base64-encoded Nix signing key for cache signing"
   value       = local.nix_signing_key_base64
   sensitive   = true
+}
+
+output "niks3_api_token" {
+  description = "API token for Niks3 access."
+  value       = local.niks3_api_token
+  sensitive   = true
+}
+
+output "niks3_oidc_json_base64" {
+  description = "Base64-encoded OIDC configuration for Niks3 (base64-encoded for Fly secrets)"
+  value       = local.niks3_oidc_json_base64
+  sensitive   = false
+}
+
+output "fly_app_name" {
+  description = "Name of the Fly app"
+  value       = local.fly_app_name
+  sensitive   = false
 }
