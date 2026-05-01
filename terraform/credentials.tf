@@ -15,7 +15,7 @@ resource "cloudflare_api_token" "bucket_r2_read_write" {
     resources = jsonencode({
       # See https://developers.cloudflare.com/r2/api/tokens/#bucket
       # "com.cloudflare.edge.r2.bucket.<ACCOUNT_ID>_<JURISDICTION>_<BUCKET_NAME>"
-      "com.cloudflare.edge.r2.bucket.${var.cloudflare_account_id}_default_${cloudflare_r2_bucket.bucket.name}" = "*"
+      "com.cloudflare.edge.r2.bucket.${local.cf_account_id}_default_${cloudflare_r2_bucket.bucket.name}" = "*"
     })
   }]
 }

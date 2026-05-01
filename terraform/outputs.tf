@@ -1,6 +1,7 @@
 output "r2_endpoint" {
   description = "R2 endpoint URL"
-  value       = "${var.cloudflare_account_id}.r2.cloudflarestorage.com"
+  value       = "${local.cf_account_id}.r2.cloudflarestorage.com"
+  sensitive   = true
 }
 
 output "r2_public_domain" {

@@ -1,17 +1,17 @@
 resource "cloudflare_r2_bucket" "bucket" {
-  account_id = var.cloudflare_account_id
+  account_id = local.cf_account_id
   name       = "niks3-cache"
   location   = "apac"
 }
 
 resource "cloudflare_r2_managed_domain" "managed_domain" {
-  account_id  = var.cloudflare_account_id
+  account_id  = local.cf_account_id
   bucket_name = cloudflare_r2_bucket.bucket.name
   enabled     = false
 }
 
 resource "cloudflare_r2_bucket_cors" "cors" {
-  account_id  = var.cloudflare_account_id
+  account_id  = local.cf_account_id
   bucket_name = cloudflare_r2_bucket.bucket.name
 
   rules = [{
