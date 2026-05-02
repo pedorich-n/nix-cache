@@ -5,13 +5,15 @@ locals {
     } if section.label != "" && section.label != "Related Items"
   }
   nix_signing_key_base64 = base64encode(local.op_nix_cache_secrets["Nix"]["signing_key"])
-  cf_account_id          = local.op_nix_cache_secrets["Cloudflare_API"]["account_id"]
+
+  cf_account_id          = local.op_nix_cache_secrets["Cloudflare"]["account_id"]
+  cf_zone_id             = local.op_nix_cache_secrets["Cloudflare"]["zone_id"]
 
   r2_bucket_access_key_id     = cloudflare_api_token.bucket_r2_read_write.id
   r2_bucket_access_key_secret = sha256(cloudflare_api_token.bucket_r2_read_write.value)
   r2_bucket_region            = "auto" # See https://developers.cloudflare.com/r2/api/s3/api/#bucket-region
   r2_bucket_name              = cloudflare_r2_bucket.bucket.name
-  r2_bucket_public_endpoint   = cloudflare_r2_managed_domain.managed_domain.domain
+  r2_bucket_public_endpoint   = cloudflare_r2_custom_domain.custom_domain.domain
 
   fly_app_name   = nonsensitive(local.op_nix_cache_secrets["Fly"]["app_name"])
   fly_public_url = "https://${local.fly_app_name}.fly.dev"

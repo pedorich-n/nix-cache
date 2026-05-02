@@ -10,6 +10,10 @@ data "cloudflare_api_token_permission_groups_list" "r2_write" {
   name  = urlencode("Workers R2 Storage Bucket Item Write")
 }
 
+data "cloudflare_zone" "main" {
+  zone_id = local.cf_zone_id
+}
+
 data "onepassword_vault" "homelab" {
   name = "HomeLab"
 }

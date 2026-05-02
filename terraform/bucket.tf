@@ -4,10 +4,13 @@ resource "cloudflare_r2_bucket" "bucket" {
   location   = "apac"
 }
 
-resource "cloudflare_r2_managed_domain" "managed_domain" {
-  account_id  = local.cf_account_id
-  bucket_name = cloudflare_r2_bucket.bucket.name
+resource "cloudflare_r2_custom_domain" "custom_domain" {
   enabled     = true
+  account_id  = local.cf_account_id
+  zone_id     = local.cf_zone_id
+  bucket_name = cloudflare_r2_bucket.bucket.name
+  domain      = "nix-cache.${data.cloudflare_zone.main.name}"
+  min_tls     = "1.0"
 }
 
 resource "cloudflare_r2_bucket_cors" "cors" {
