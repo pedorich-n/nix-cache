@@ -10,6 +10,8 @@ locals {
   r2_bucket_access_key_id     = cloudflare_api_token.bucket_r2_read_write.id
   r2_bucket_access_key_secret = sha256(cloudflare_api_token.bucket_r2_read_write.value)
   r2_bucket_region            = "auto" # See https://developers.cloudflare.com/r2/api/s3/api/#bucket-region
+  r2_bucket_name              = cloudflare_r2_bucket.bucket.name
+  r2_bucket_public_endpoint   = cloudflare_r2_managed_domain.managed_domain.domain
 
   fly_app_name   = nonsensitive(local.op_nix_cache_secrets["Fly"]["app_name"])
   fly_public_url = "https://${local.fly_app_name}.fly.dev"
@@ -28,7 +30,7 @@ locals {
     providers : {
       github : {
         issuer : "https://token.actions.githubusercontent.com",
-        audience : local.fly_app_name,
+        audience : local.fly_public_url,
         bound_claims : {
           repository_owner : [
             local.github_owner

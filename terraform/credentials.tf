@@ -28,6 +28,22 @@ resource "onepassword_item" "cloudflare_r2" {
   tags = ["Managed By Terraform"]
 
   section {
+    label = "Metadata"
+
+    field {
+      label = "bucket_name"
+      type  = "STRING"
+      value = local.r2_bucket_name
+    }
+
+    field {
+      label = "bucket_public_endpoint"
+      type  = "STRING"
+      value = local.r2_bucket_public_endpoint
+    }
+  }
+
+  section {
     label = "S3_API"
 
     field {
@@ -41,6 +57,7 @@ resource "onepassword_item" "cloudflare_r2" {
       type  = "CONCEALED"
       value = local.r2_bucket_access_key_secret
     }
+
   }
 
 }

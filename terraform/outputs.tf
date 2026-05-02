@@ -6,12 +6,12 @@ output "r2_endpoint" {
 
 output "r2_public_domain" {
   description = "Public domain for the R2 bucket"
-  value       = cloudflare_r2_managed_domain.managed_domain.domain
+  value       = local.r2_bucket_public_endpoint
 }
 
 output "r2_bucket_name" {
   description = "Name of the created R2 bucket"
-  value       = cloudflare_r2_bucket.bucket.name
+  value       = local.r2_bucket_name
 }
 
 # See https://developers.cloudflare.com/r2/api/s3/api/#bucket-region
