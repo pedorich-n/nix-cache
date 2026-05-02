@@ -7,7 +7,7 @@ resource "cloudflare_r2_bucket" "bucket" {
 resource "cloudflare_r2_managed_domain" "managed_domain" {
   account_id  = local.cf_account_id
   bucket_name = cloudflare_r2_bucket.bucket.name
-  enabled     = false
+  enabled     = true
 }
 
 resource "cloudflare_r2_bucket_cors" "cors" {

@@ -24,6 +24,7 @@ writeShellApplication {
     FLY_APP_NAME=$(get_tf_output fly_app_name)
     R2_ENDPOINT=$(get_tf_output r2_endpoint)
     R2_BUCKET_REGION=$(get_tf_output r2_bucket_region)
+    R2_BUCKET_PUBLIC_DOMAIN=$(get_tf_output r2_public_domain)
     R2_BUCKET_NAME=$(get_tf_output r2_bucket_name)
     R2_BUCKET_ACCESS_KEY_ID=$(get_tf_output r2_bucket_access_key_id)
     R2_BUCKET_ACCESS_KEY_SECRET=$(get_tf_output r2_bucket_access_key_secret)
@@ -42,7 +43,8 @@ writeShellApplication {
       NIKS3_S3_REGION="''${R2_BUCKET_REGION}" \
       NIKS3_API_TOKEN="''${NIKS3_API_TOKEN}" \
       NIX_SIGNING_KEY_BASE64="''${NIX_SIGNING_KEY_BASE64}" \
-      NIKS3_OIDC_CONFIG_BASE64="''${NIKS3_OIDC_CONFIG_BASE64}"
+      NIKS3_OIDC_CONFIG_BASE64="''${NIKS3_OIDC_CONFIG_BASE64}" \
+      NIKS3_CACHE_URL="https://''${R2_BUCKET_PUBLIC_DOMAIN}"
 
   '';
 }
