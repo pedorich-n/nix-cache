@@ -26,7 +26,7 @@ writeShellApplication {
     FLY_APP_NAME=$(get_tf_output fly_app_name)
     DB_NAME="''${FLY_APP_NAME}-db"
 
-    existing=$(fly postgres list --json 2>/dev/null | jq -r '.[].ID // empty')
+    existing=$(fly postgres list --json 2>/dev/null | jq -r '.[].ID // empty' 2>/dev/null || true)
 
     if echo "$existing" | grep -qx "''${DB_NAME}"; then
       echo "Postgres cluster ''${DB_NAME}' already exists, skipping creation."
@@ -39,5 +39,13 @@ writeShellApplication {
       --vm-size shared-cpu-1x \
       --initial-cluster-size 1 \
       --volume-size 1
+
+    cd "''${ROOT}/fly"
+
+    fly postgres attach "''${DB_NAME}" \
+      --app "''${FLY_APP_NAME}"
+
+    echo ""
+    echo "Save 'DATABASE_URL' to 1Password!"
   '';
 }

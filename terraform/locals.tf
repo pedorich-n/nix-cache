@@ -6,8 +6,8 @@ locals {
   }
   nix_signing_key_base64 = base64encode(local.op_nix_cache_secrets["Nix"]["signing_key"])
 
-  cf_account_id          = local.op_nix_cache_secrets["Cloudflare"]["account_id"]
-  cf_zone_id             = local.op_nix_cache_secrets["Cloudflare"]["zone_id"]
+  cf_account_id = local.op_nix_cache_secrets["Cloudflare"]["account_id"]
+  cf_zone_id    = local.op_nix_cache_secrets["Cloudflare"]["zone_id"]
 
   r2_bucket_access_key_id     = cloudflare_api_token.bucket_r2_read_write.id
   r2_bucket_access_key_secret = sha256(cloudflare_api_token.bucket_r2_read_write.value)
@@ -15,12 +15,9 @@ locals {
   r2_bucket_name              = cloudflare_r2_bucket.bucket.name
   r2_bucket_public_endpoint   = cloudflare_r2_custom_domain.custom_domain.domain
 
-  fly_app_name   = nonsensitive(local.op_nix_cache_secrets["Fly"]["app_name"])
-  fly_public_url = "https://${local.fly_app_name}.fly.dev"
-  fly_postgres_username = local.op_nix_cache_secrets["Fly"]["postgres_username"]
-  fly_postgres_password = local.op_nix_cache_secrets["Fly"]["postgres_password"]
-  fly_postgres_host     = local.op_nix_cache_secrets["Fly"]["postgres_host"]
-  fly_postgres_connection_string = "postgresql://${local.fly_postgres_username}:${local.fly_postgres_password}@${local.fly_postgres_host}:5432"
+  fly_app_name                   = nonsensitive(local.op_nix_cache_secrets["Fly"]["app_name"])
+  fly_public_url                 = "https://${local.fly_app_name}.fly.dev"
+  fly_postgres_connection_string = local.op_nix_cache_secrets["Fly"]["postgres_url"]
 
   github_owner = "pedorich-n"
   github_repos = [
