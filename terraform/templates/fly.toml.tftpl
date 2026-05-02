@@ -9,6 +9,9 @@ swap_size_mb = 512
 [build]
 image = 'ghcr.io/mic92/niks3:v1.4.0'
 
+[deploy]
+strategy = "rolling"
+
 [env]
 NIKS3_HTTP_ADDR = ':5751'
 NIKS3_S3_USE_SSL = 'true'
@@ -20,7 +23,7 @@ NIKS3_OIDC_CONFIG = '/run/secrets/niks3-oidc-config.json'
 
 [[files]]
 guest_path = "/run/secrets/niks3-signing-key"
-secret_name = "NIKS3_SIGNING_KEY_FILE_BASE64"
+secret_name = "NIX_SIGNING_KEY_BASE64"
 
 [[files]]
 guest_path = "/run/secrets/niks3-oidc-config.json"

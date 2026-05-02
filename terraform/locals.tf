@@ -13,6 +13,10 @@ locals {
 
   fly_app_name   = nonsensitive(local.op_nix_cache_secrets["Fly"]["app_name"])
   fly_public_url = "https://${local.fly_app_name}.fly.dev"
+  fly_postgres_username = local.op_nix_cache_secrets["Fly"]["postgres_username"]
+  fly_postgres_password = local.op_nix_cache_secrets["Fly"]["postgres_password"]
+  fly_postgres_host     = local.op_nix_cache_secrets["Fly"]["postgres_host"]
+  fly_postgres_connection_string = "postgresql://${local.fly_postgres_username}:${local.fly_postgres_password}@${local.fly_postgres_host}:5432"
 
   github_owner = "pedorich-n"
   github_repos = [

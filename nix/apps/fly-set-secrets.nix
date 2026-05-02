@@ -5,7 +5,7 @@
   opentofu,
 }:
 writeShellApplication {
-  name = "set-fly-secrets";
+  name = "fly-set-secrets";
 
   runtimeInputs = [
     gitMinimal
@@ -30,9 +30,11 @@ writeShellApplication {
     NIX_SIGNING_KEY_BASE64=$(get_tf_output nix_signing_key_base64)
     NIKS3_API_TOKEN=$(get_tf_output niks3_api_token)
     NIKS3_OIDC_CONFIG_BASE64=$(get_tf_output niks3_oidc_json_base64)
+    NIKS3_POSTGRES_CONNECTION_STRING=$(get_tf_output niks3_postgres_connection_string)
 
     echo "Setting Fly secrets for app ''${FLY_APP_NAME}..."
     fly secrets set --app "''${FLY_APP_NAME}" \
+      NIKS3_DB="''${NIKS3_POSTGRES_CONNECTION_STRING}" \
       NIKS3_S3_ENDPOINT="''${R2_ENDPOINT}" \
       NIKS3_S3_BUCKET="''${R2_BUCKET_NAME}" \
       NIKS3_S3_ACCESS_KEY="''${R2_BUCKET_ACCESS_KEY_ID}" \
@@ -41,5 +43,6 @@ writeShellApplication {
       NIKS3_API_TOKEN="''${NIKS3_API_TOKEN}" \
       NIX_SIGNING_KEY_BASE64="''${NIX_SIGNING_KEY_BASE64}" \
       NIKS3_OIDC_CONFIG_BASE64="''${NIKS3_OIDC_CONFIG_BASE64}"
+
   '';
 }

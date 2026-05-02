@@ -51,6 +51,12 @@ output "niks3_oidc_json_base64" {
   sensitive   = false
 }
 
+output "niks3_postgres_connection_string" {
+  description = "Connection string for the Postgres database on Fly"
+  value       = local.fly_postgres_connection_string
+  sensitive   = true
+}
+
 output "fly_app_name" {
   description = "Name of the Fly app"
   value       = local.fly_app_name
