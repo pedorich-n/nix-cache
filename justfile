@@ -1,6 +1,4 @@
-[no-cd]
-_run target *args:
-    nix run "{{ justfile_directory() + '#' + target }}" {{ if args != "" { '-- ' + args } else { '' } }}
+import "dev/justfile.default"
 
 fly-deploy:
     just _run fly-deploy
