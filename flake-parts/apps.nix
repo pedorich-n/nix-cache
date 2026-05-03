@@ -6,8 +6,10 @@
       ...
     }:
     let
+      mkFlyWrapper = args: pkgs.callPackage (import ../nix/lib/mk-fly-command.nix args) { };
+
       packages = lib.filesystem.packagesFromDirectoryRecursive {
-        inherit (pkgs) callPackage;
+        callPackage = lib.callPackageWith (pkgs // { inherit mkFlyWrapper; });
         directory = ../nix/apps;
       };
 
