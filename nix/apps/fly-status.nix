@@ -1,7 +1,7 @@
 {
-  mkFlyWrapper,
+  wrappers,
 }:
-mkFlyWrapper {
+wrappers.mkFlyWrapper {
   command = "status";
   isDb = false;
 }

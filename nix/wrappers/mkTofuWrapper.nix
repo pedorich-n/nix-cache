@@ -1,23 +1,13 @@
 {
-  command ? null,
-}:
-{
-  lib,
   writeShellApplication,
   gitMinimal,
   opentofu,
 }:
-let
-  nameParts = [
-    "tofu"
-  ]
-  ++ lib.optional (command != null) command
-  ++ lib.optional (command == null) "wrapper";
-
-  name = lib.concatStringsSep "-" nameParts;
-in
+{
+  command ? "validate",
+}:
 writeShellApplication {
-  inherit name;
+  name = "tofu-${command}-wrapper";
 
   runtimeInputs = [
     gitMinimal
@@ -32,13 +22,20 @@ writeShellApplication {
       exit 1
     fi
 
+    if ! [ -x "$(command -v gh)" ]; then
+      echo "Error: GitHub CLI (gh) not found in PATH!" >&2
+      exit 1
+    fi
+
 
     OP_ACCOUNT=$(op account list --format=json | jq -r '.[0] | .account_uuid')
     export OP_ACCOUNT
 
+    GH_PATH="$(which gh)"
+    export GH_PATH
+
     cd "''${ROOT}/terraform"
 
-    ${lib.optionalString (command != null) "tofu ${command}"}
-    ${lib.optionalString (command == null) "tofu validate"}
+    tofu ${command} "$@"
   '';
 }
