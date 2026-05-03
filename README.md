@@ -4,7 +4,6 @@ This repo contains infrastructure for setting up a Nix Binary cache managed by [
 
 Not intended to be reusable by others.
 
-
 ## Acknowledgements
 
 - Heavily inspired by https://github.com/secbear/nix-cache

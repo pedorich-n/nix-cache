@@ -14,7 +14,7 @@
         directory = ../nix/apps;
       };
 
-      apps = lib.mapAttrs (name: pkg: { program = pkg; }) packages;
+      apps = lib.mapAttrs (_name: pkg: { program = pkg; }) packages;
     in
     {
       inherit apps;

@@ -6,3 +6,4 @@
 **/config.tf.json
 
 fly.toml
+.pre-commit-config.yaml
