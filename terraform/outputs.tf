@@ -62,3 +62,9 @@ output "fly_app_name" {
   value       = local.fly_app_name
   sensitive   = false
 }
+
+output "fly_app_url" {
+  description = "URL of the Fly app"
+  value       = local.fly_app_url
+  sensitive   = false
+}

@@ -14,3 +14,6 @@ tofu-apply *args:
 
 tofu-output *args:
     just _run tofu-output "{{ args }}"
+
+niks3-gc *args:
+    just _run niks3-gc "{{ args }}"
