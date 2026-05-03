@@ -10,6 +10,9 @@ inputs:
       provided, no token will be requested.
     required: false
     default: ""
+  niks3_server_url:
+    description: The URL of the Niks3 server to push to.
+    required: true
   paths_to_push:
     description: A newline-separated list of /nix/store paths to push to Niks3.
     required: true
@@ -62,6 +65,7 @@ runs:
       env:
         NIKS3_AUTH_TOKEN: ${{ steps.oidc.outputs.token }}
         PATHS_TO_PUSH: ${{ inputs.paths_to_push }}
+        NIKS3_SERVER_URL: ${{ inputs.niks3_server_url }}
       run: |
         args=(--server-url "$NIKS3_SERVER_URL")
 
