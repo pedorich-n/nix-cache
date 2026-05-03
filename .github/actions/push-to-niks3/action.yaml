@@ -4,7 +4,7 @@ inputs:
   niks3_version:
     description: The version of Niks3 to use.
     required: false
-    default: "1.4.0"
+    default: "v1.4.0"
   oidc_audience:
     description: The OIDC audience to use for requesting Niks3 tokens. If not
       provided, no token will be requested.
@@ -44,7 +44,7 @@ runs:
         URL="https://github.com/Mic92/niks3/releases/download/${VERSION}/niks3_${OS}_${ARCH}.tar.gz"
 
         echo "Downloading from $URL"
-        curl -L "$URL" -o niks3.tar.gz
+        wget "$URL" -O niks3.tar.gz
         tar -xzf niks3.tar.gz
 
     - name: Fetch OIDC token
