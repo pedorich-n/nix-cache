@@ -1,0 +1,6 @@
+{
+  mkTofuWrapper,
+}:
+mkTofuWrapper {
+  command = "apply";
+}

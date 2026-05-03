@@ -1,5 +1,6 @@
 {
   mkShellNoCC,
+  bashInteractive,
   flyctl,
   gitMinimal,
   opentofu,
@@ -8,6 +9,7 @@ mkShellNoCC {
   name = "tf";
 
   buildInputs = [
+    bashInteractive
     gitMinimal
     flyctl
     opentofu
@@ -22,7 +24,7 @@ mkShellNoCC {
     fi
 
 
-    OP_ACCOUNT=$(op account list --format=json | jq -r '.[0] | .user_uuid')
+    OP_ACCOUNT=$(op account list --format=json | jq -r '.[0] | .account_uuid')
     export OP_ACCOUNT
 
     cd "$ROOT/fly" && fly status

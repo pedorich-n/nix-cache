@@ -1,19 +1,17 @@
 {
   command ? null,
-  isDb ? false,
 }:
 {
   lib,
   writeShellApplication,
   gitMinimal,
-  flyctl,
+  opentofu,
 }:
 let
   nameParts = [
-    "fly"
+    "tofu"
   ]
   ++ lib.optional (command != null) command
-  ++ lib.optional isDb "db"
   ++ lib.optional (command == null) "wrapper";
 
   name = lib.concatStringsSep "-" nameParts;
@@ -23,21 +21,24 @@ writeShellApplication {
 
   runtimeInputs = [
     gitMinimal
-    flyctl
+    opentofu
   ];
 
   text = ''
     ROOT="$(git rev-parse --show-toplevel)"
 
-    workdir=${if isDb then "\${ROOT}/fly/db" else "\${ROOT}/fly"}
-    cd "''${workdir}"
-
-    if [ ! -f fly.toml ]; then
-      echo "fly.toml not found in ''${workdir}, skipping deployment."
+    if ! [ -x "$(command -v op)" ]; then
+      echo "Error: 1Password CLI (op) not found in PATH!" >&2
       exit 1
     fi
 
-    ${lib.optionalString (command != null) "fly ${command}"}
-    ${lib.optionalString (command == null) "fly status"}
+
+    OP_ACCOUNT=$(op account list --format=json | jq -r '.[0] | .account_uuid')
+    export OP_ACCOUNT
+
+    cd "''${ROOT}/terraform"
+
+    ${lib.optionalString (command != null) "tofu ${command}"}
+    ${lib.optionalString (command == null) "tofu validate"}
   '';
 }
