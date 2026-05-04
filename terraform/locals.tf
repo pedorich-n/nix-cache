@@ -19,10 +19,10 @@ locals {
   fly_app_url                    = "https://${local.fly_app_name}.fly.dev"
   fly_postgres_connection_string = local.op_nix_cache_secrets["Fly"]["postgres_url"]
 
-  github_owner = data.github_user.me.username
+  github_username = data.github_user.me.username
   github_repo_names = toset([
-    "nix-cache",
-    "home-server-nixos"
+    "${local.github_username}/nix-cache",
+    "${local.github_username}/home-server-nixos"
   ])
 
   niks3_api_token = local.op_nix_cache_secrets["Niks3"]["api_token"]
@@ -33,7 +33,7 @@ locals {
         audience : local.fly_app_url,
         bound_claims : {
           repository_owner : [
-            local.github_owner
+            local.github_username
           ]
         },
         bound_subject : [for repo in data.github_repository.managed : "repo:${repo.full_name}:*"]

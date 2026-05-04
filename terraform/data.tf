@@ -29,5 +29,5 @@ data "github_user" "me" {
 
 data "github_repository" "managed" {
   for_each  = local.github_repo_names
-  full_name = "${local.github_owner}/${each.key}"
+  full_name = each.key
 }
