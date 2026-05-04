@@ -1,4 +1,4 @@
-name: Do niks3 garbage collection
+name: Niks3 Garbage Collection
 on:
   workflow_dispatch: # allows manual triggering
   schedule:
