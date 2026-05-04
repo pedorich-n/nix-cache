@@ -6,11 +6,13 @@
       ...
     }:
     let
-      mkFlyWrapper = args: pkgs.callPackage (import ../nix/lib/mk-fly-command.nix args) { };
-      mkTofuWrapper = args: pkgs.callPackage (import ../nix/lib/mk-tofu-command.nix args) { };
+      wrappers = lib.filesystem.packagesFromDirectoryRecursive {
+        inherit (pkgs) callPackage;
+        directory = ../nix/wrappers;
+      };
 
       packages = lib.filesystem.packagesFromDirectoryRecursive {
-        callPackage = lib.callPackageWith (pkgs // { inherit mkFlyWrapper mkTofuWrapper; });
+        callPackage = lib.callPackageWith (pkgs // { inherit wrappers; });
         directory = ../nix/apps;
       };
 

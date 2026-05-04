@@ -1,16 +1,22 @@
 import "dev/justfile.default"
 
-fly-deploy:
-    just _run fly-deploy
+fly-deploy *args:
+    just _run fly-deploy "{{ args }}"
 
-fly-status:
-    just _run fly-status
+fly-status *args:
+    just _run fly-status "{{ args }}"
 
-tofu-plan:
-    just _run tofu-plan
+tofu-init *args:
+    just _run tofu-init "{{ args }}"
 
-tofu-apply:
-    just _run tofu-apply
+tofu-plan *args:
+    just _run tofu-plan "{{ args }}"
 
-tofu-output:
-    just _run tofu-output
+tofu-apply *args:
+    just _run tofu-apply "{{ args }}"
+
+tofu-output *args:
+    just _run tofu-output "{{ args }}"
+
+niks3-gc *args:
+    just _run niks3-gc "{{ args }}"

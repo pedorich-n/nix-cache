@@ -1,0 +1,22 @@
+name: Niks3 Garbage Collection
+on:
+  workflow_dispatch: # allows manual triggering
+  schedule:
+    - cron: "0 10 1,14 * *"
+
+jobs:
+  niks3-gc:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup job
+        uses: pedorich-n/github-workflows/.github/actions/setup-nix-job@main
+
+      - name: Run niks3 gc
+        shell: bash
+        env:
+          NIKS3_API_TOKEN: ${{ secrets.NIKS3_API_TOKEN }}
+          NIKS3_SERVER_URL: ${{ vars.NIKS3_SERVER_URL }}
+        run: |
+          nix run .#niks3-gc -- \
+          --older-than 720h \
+          --failed-uploads-older-than 6h

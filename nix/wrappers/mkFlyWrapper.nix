@@ -1,18 +1,18 @@
 {
-  command ? null,
-  isDb ? false,
-}:
-{
   lib,
   writeShellApplication,
   gitMinimal,
   flyctl,
 }:
+{
+  command ? "status",
+  isDb ? false,
+}:
 let
   nameParts = [
     "fly"
+    command
   ]
-  ++ lib.optional (command != null) command
   ++ lib.optional isDb "db"
   ++ lib.optional (command == null) "wrapper";
 
@@ -37,7 +37,6 @@ writeShellApplication {
       exit 1
     fi
 
-    ${lib.optionalString (command != null) "fly ${command}"}
-    ${lib.optionalString (command == null) "fly status"}
+    fly ${command} "$@"
   '';
 }

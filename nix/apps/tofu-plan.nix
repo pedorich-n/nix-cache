@@ -1,6 +1,6 @@
 {
-  mkTofuWrapper,
+  wrappers,
 }:
-mkTofuWrapper {
+wrappers.mkTofuWrapper {
   command = "plan";
 }

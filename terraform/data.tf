@@ -22,3 +22,15 @@ data "onepassword_item" "nix_cache" {
   vault = data.onepassword_vault.homelab.uuid
   title = "Nix_Cache"
 }
+
+data "github_user" "me" {
+  username = "pedorich-n"
+}
+
+data "github_repository" "nix_cache" {
+  full_name = "${data.github_user.me.username}/nix-cache"
+}
+
+data "github_repository" "home_server_nixos" {
+  full_name = "${data.github_user.me.username}/home-server-nixos"
+}

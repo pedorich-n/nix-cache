@@ -23,9 +23,16 @@ mkShellNoCC {
       exit 1
     fi
 
+    if ! [ -x "$(command -v gh)" ]; then
+      echo "Error: GitHub CLI (gh) not found in PATH!" >&2
+      exit 1
+    fi
 
     OP_ACCOUNT=$(op account list --format=json | jq -r '.[0] | .account_uuid')
     export OP_ACCOUNT
+
+    GH_PATH="$(which gh)"
+    export GH_PATH
 
     cd "$ROOT/fly" && fly status
   '';

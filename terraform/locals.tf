@@ -16,12 +16,13 @@ locals {
   r2_bucket_public_endpoint   = cloudflare_r2_custom_domain.custom_domain.domain
 
   fly_app_name                   = nonsensitive(local.op_nix_cache_secrets["Fly"]["app_name"])
-  fly_public_url                 = "https://${local.fly_app_name}.fly.dev"
+  fly_app_url                    = "https://${local.fly_app_name}.fly.dev"
   fly_postgres_connection_string = local.op_nix_cache_secrets["Fly"]["postgres_url"]
 
-  github_owner = "pedorich-n"
+  github_owner = data.github_user.me.username
   github_repos = [
-    "home-server-nixos"
+    data.github_repository.nix_cache.full_name,
+    data.github_repository.home_server_nixos.full_name
   ]
 
   niks3_api_token = local.op_nix_cache_secrets["Niks3"]["api_token"]
@@ -29,13 +30,13 @@ locals {
     providers : {
       github : {
         issuer : "https://token.actions.githubusercontent.com",
-        audience : local.fly_public_url,
+        audience : local.fly_app_url,
         bound_claims : {
           repository_owner : [
             local.github_owner
           ]
         },
-        bound_subject : [for repo in local.github_repos : "repo:${local.github_owner}/${repo}:*"]
+        bound_subject : [for repo in local.github_repos : "repo:${repo}:*"]
       }
     }
   }
