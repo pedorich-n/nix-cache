@@ -27,10 +27,7 @@ data "github_user" "me" {
   username = "pedorich-n"
 }
 
-data "github_repository" "nix_cache" {
-  full_name = "${data.github_user.me.username}/nix-cache"
-}
-
-data "github_repository" "home_server_nixos" {
-  full_name = "${data.github_user.me.username}/home-server-nixos"
+data "github_repository" "managed" {
+  for_each  = local.github_repo_names
+  full_name = each.key
 }

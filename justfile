@@ -3,6 +3,9 @@ import "dev/justfile.default"
 fly-deploy *args:
     just _run fly-deploy "{{ args }}"
 
+fly-set-secrets *args:
+    just _run fly-set-secrets "{{ args }}"
+
 fly-status *args:
     just _run fly-status "{{ args }}"
 
