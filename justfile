@@ -6,6 +6,9 @@ fly-deploy *args:
 fly-status *args:
     just _run fly-status "{{ args }}"
 
+tofu-init *args:
+    just _run tofu-init "{{ args }}"
+
 tofu-plan *args:
     just _run tofu-plan "{{ args }}"
 
