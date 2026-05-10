@@ -1,13 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "local>pedorich-n/renovate-config"
-  ],
+  "extends": ["local>pedorich-n/renovate-config"],
   "customManagers": [
     {
       "customType": "jsonata",
       "fileFormat": "json",
-      "description": "MCP servers from a JSON file",
+      "description": "Container image in terraform template",
       "managerFilePatterns": ["/^terraform/templates/container\\.json$/"],
       "datasourceTemplate": "docker",
       "matchStrings": [
