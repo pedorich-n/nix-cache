@@ -11,7 +11,7 @@
       "managerFilePatterns": ["/^terraform/templates/container\\.json$/"],
       "datasourceTemplate": "docker",
       "matchStrings": [
-        "{ \"depName\": image, \"packageName\": image , \"currentValue\": version,  \"registryUrlTemplate\": \"https://{{#if (equals registry 'docker.io')}}index.docker.io{{else}}{{registry}}{{/if}}\",  \"versioning\": versioning, \"currentDigest\": digest }"
+        "{ \"depName\": image, \"packageName\": image , \"currentValue\": version,  \"registryUrl\": \"https://\" & (registry = \"docker.io\" ? \"index.docker.io\" : registry),  \"versioning\": versioning, \"currentDigest\": digest }"
       ]
     }
   ]
