@@ -1,4 +1,8 @@
 locals {
+  container_info          = jsondecode(file("${path.module}/templates/container.json"))
+  container_image_url     = "${local.container_info.registry}/${local.container_info.image}@${local.container_info.digest}"
+  container_image_version = local.container_info.version
+
   op_nix_cache_secrets = {
     for section in data.onepassword_item.nix_cache.section : section.label => {
       for field in section.field : field.label => field.value

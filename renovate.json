@@ -1,6 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "local>pedorich-n/renovate-config"
+  "extends": ["local>pedorich-n/renovate-config"],
+  "customManagers": [
+    {
+      "customType": "jsonata",
+      "fileFormat": "json",
+      "description": "Container image in terraform template",
+      "managerFilePatterns": ["/^terraform/templates/container\\.json$/"],
+      "datasourceTemplate": "docker",
+      "matchStrings": [
+        "{ \"depName\": image, \"packageName\": image , \"currentValue\": version,  \"registryUrl\": \"https://\" & (registry = \"docker.io\" ? \"index.docker.io\" : registry),  \"versioning\": versioning, \"currentDigest\": digest }"
+      ]
+    }
   ]
 }
