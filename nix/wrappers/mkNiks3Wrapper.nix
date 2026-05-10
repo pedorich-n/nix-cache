@@ -33,7 +33,7 @@ writeShellApplication {
 
     if [ "''${CI:-false}" = "false" ]; then
       NIKS3_API_TOKEN=$(get_tf_output niks3_api_token)
-      NIKS3_SERVER_URL=$(get_tf_output fly_app_url)
+      NIKS3_SERVER_URL=$(get_tf_output niks3_server_url)
     else
       ensure_envs "NIKS3_API_TOKEN" "NIKS3_SERVER_URL"
     fi

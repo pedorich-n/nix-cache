@@ -56,6 +56,7 @@ locals {
   ])
 
   niks3_server_domain = "niks3.${data.cloudflare_zone.main.name}"
+  niks3_server_url    = "https://${local.niks3_server_domain}"
   niks3_api_token     = local.op_nix_cache_secrets["Niks3"]["api_token"]
   niks3_oidc = {
     providers : {
