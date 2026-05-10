@@ -39,6 +39,12 @@ output "nix_signing_key_base64" {
   sensitive   = true
 }
 
+output "niks3_server_url" {
+  description = "URL of the Niks3 server"
+  value       = local.niks3_server_url
+  sensitive   = false
+}
+
 output "niks3_api_token" {
   description = "API token for Niks3 access."
   value       = local.niks3_api_token
@@ -60,11 +66,5 @@ output "niks3_postgres_connection_string" {
 output "fly_app_name" {
   description = "Name of the Fly app"
   value       = local.fly_app_name
-  sensitive   = false
-}
-
-output "fly_app_url" {
-  description = "URL of the Fly app"
-  value       = local.fly_app_url
   sensitive   = false
 }

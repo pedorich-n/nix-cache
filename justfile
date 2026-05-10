@@ -1,5 +1,8 @@
 import "dev/justfile.default"
 
+shell *args:
+    just _develop "{{ args }}"
+
 fly-deploy *args:
     just _run fly-deploy "{{ args }}"
 
