@@ -22,6 +22,32 @@ locals {
   fly_app_name                   = nonsensitive(local.op_nix_cache_secrets["Fly"]["app_name"])
   fly_app_url                    = "https://${local.fly_app_name}.fly.dev"
   fly_postgres_connection_string = local.op_nix_cache_secrets["Fly"]["postgres_url"]
+  fly_dns_records = {
+    "ipv4" : {
+      type    = "A"
+      name    = local.niks3_server_domain
+      value   = local.op_nix_cache_secrets["Fly_domain_DNS"]["a"]
+      proxied = true
+    },
+    "ipv6" : {
+      type    = "AAAA"
+      name    = local.niks3_server_domain
+      value   = local.op_nix_cache_secrets["Fly_domain_DNS"]["aaaa"]
+      proxied = true
+    },
+    "ownership" : {
+      type    = "TXT"
+      name    = "_fly-ownership.${local.niks3_server_domain}"
+      value   = "\"${local.op_nix_cache_secrets["Fly_domain_DNS"]["ownership"]}\""
+      proxied = false
+    },
+    "acme_challenge" : {
+      type    = "CNAME"
+      name    = "_acme-challenge.${local.niks3_server_domain}"
+      value   = local.op_nix_cache_secrets["Fly_domain_DNS"]["acme_challenge"]
+      proxied = false
+    }
+  }
 
   github_username = data.github_user.me.username
   github_repo_names = toset([
@@ -29,7 +55,8 @@ locals {
     "${local.github_username}/home-server-nixos"
   ])
 
-  niks3_api_token = local.op_nix_cache_secrets["Niks3"]["api_token"]
+  niks3_server_domain = "niks3.${data.cloudflare_zone.main.name}"
+  niks3_api_token     = local.op_nix_cache_secrets["Niks3"]["api_token"]
   niks3_oidc = {
     providers : {
       github : {
