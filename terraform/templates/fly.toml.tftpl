@@ -7,7 +7,7 @@ kill_timeout = 30
 swap_size_mb = 512
 
 [build]
-image = 'ghcr.io/mic92/niks3:v1.4.0'
+image = '${image_url}' # ${image_version}
 
 [deploy]
 strategy = "rolling"
