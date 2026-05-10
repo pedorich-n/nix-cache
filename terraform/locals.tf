@@ -20,7 +20,6 @@ locals {
   r2_bucket_public_endpoint   = cloudflare_r2_custom_domain.custom_domain.domain
 
   fly_app_name                   = nonsensitive(local.op_nix_cache_secrets["Fly"]["app_name"])
-  fly_app_url                    = "https://${local.fly_app_name}.fly.dev"
   fly_postgres_connection_string = local.op_nix_cache_secrets["Fly"]["postgres_url"]
   fly_dns_records = {
     "ipv4" : {
@@ -62,7 +61,7 @@ locals {
     providers : {
       github : {
         issuer : "https://token.actions.githubusercontent.com",
-        audience : local.fly_app_url,
+        audience : local.niks3_server_url,
         bound_claims : {
           repository_owner : [
             local.github_username
