@@ -2,5 +2,17 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "local>pedorich-n/renovate-config"
+  ],
+  "customManagers": [
+    {
+      "customType": "jsonata",
+      "fileFormat": "json",
+      "description": "MCP servers from a JSON file",
+      "managerFilePatterns": ["/^terraform/templates/container\\.json$/"],
+      "datasourceTemplate": "docker",
+      "matchStrings": [
+        "{ \"depName\": image, \"packageName\": image , \"currentValue\": version,  \"registryUrlTemplate\": \"https://{{#if (equals registry 'docker.io')}}index.docker.io{{else}}{{registry}}{{/if}}\",  \"versioning\": versioning, \"currentDigest\": digest }"
+      ]
+    }
   ]
 }
