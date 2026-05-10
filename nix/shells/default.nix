@@ -34,6 +34,6 @@ mkShellNoCC {
     GH_PATH="$(which gh)"
     export GH_PATH
 
-    cd "$ROOT/fly" && fly status
+    fly status --config "''${ROOT}/fly/fly.toml"
   '';
 }
