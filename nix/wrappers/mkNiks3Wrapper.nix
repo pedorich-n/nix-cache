@@ -38,9 +38,13 @@ writeShellApplication {
       ensure_envs "NIKS3_API_TOKEN" "NIKS3_SERVER_URL"
     fi
 
+    TOKEN_FILE=$(mktemp "''${XDG_RUNTIME_DIR:-/tmp}/niks3-token.XXXXXX")
+    trap 'rm -f "$TOKEN_FILE"' EXIT
+    printf '%s' "''${NIKS3_API_TOKEN}" > "$TOKEN_FILE"
+
     niks3 ${command} \
       --server-url "''${NIKS3_SERVER_URL}" \
-      --auth-token "''${NIKS3_API_TOKEN}" \
+      --auth-token-path "$TOKEN_FILE" \
       "$@"
   '';
 }
