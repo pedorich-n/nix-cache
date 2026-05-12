@@ -7,8 +7,8 @@ resource "cloudflare_ruleset" "r2_index_rewrite" {
 
   rules = [{
     ref         = "r2_root_index_rewrite"
-    description = "Rewrite / to /index.html"
-    expression  = "(http.host eq \"${cloudflare_r2_custom_domain.custom_domain.domain}\" and http.request.uri.path eq \"/\")"
+    description = "Rewrite R2 root path to /index.html"
+    expression  = "(http.host eq \"${local.r2_bucket_public_domain}\" and http.request.uri.path eq \"/\")"
     action      = "rewrite"
     action_parameters = {
       uri = {

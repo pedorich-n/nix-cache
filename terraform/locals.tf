@@ -1,5 +1,5 @@
 locals {
-  container_info          = jsondecode(file("${path.module}/templates/container.json"))
+  container_info          = jsondecode(file("${path.module}/files/container.json"))
   container_image_url     = "${local.container_info.registry}/${local.container_info.image}@${local.container_info.digest}"
   container_image_version = local.container_info.version
 
@@ -17,7 +17,8 @@ locals {
   r2_bucket_access_key_secret = sha256(cloudflare_api_token.bucket_r2_read_write.value)
   r2_bucket_region            = "auto" # See https://developers.cloudflare.com/r2/api/s3/api/#bucket-region
   r2_bucket_name              = cloudflare_r2_bucket.bucket.name
-  r2_bucket_public_endpoint   = cloudflare_r2_custom_domain.custom_domain.domain
+  r2_bucket_public_domain     = cloudflare_r2_custom_domain.custom_domain.domain
+  r2_bucket_public_url        = "https://${local.r2_bucket_public_domain}"
 
   fly_app_name                   = nonsensitive(local.op_nix_cache_secrets["Fly"]["app_name"])
   fly_postgres_connection_string = local.op_nix_cache_secrets["Fly"]["postgres_url"]
@@ -73,4 +74,6 @@ locals {
   }
   niks3_oidc_json        = jsonencode(local.niks3_oidc)
   niks3_oidc_json_base64 = base64encode(local.niks3_oidc_json)
+
+  workers_script_path = "${path.module}/files/niks3_redirects.js"
 }

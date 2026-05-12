@@ -37,9 +37,9 @@ resource "onepassword_item" "cloudflare_r2" {
     }
 
     field {
-      label = "bucket_public_endpoint"
+      label = "bucket_public_domain"
       type  = "STRING"
-      value = local.r2_bucket_public_endpoint
+      value = local.r2_bucket_public_domain
     }
   }
 
