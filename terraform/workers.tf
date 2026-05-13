@@ -3,6 +3,12 @@ resource "cloudflare_worker" "niks3_redirects" {
   name       = "niks3-redirect-worker"
   observability = {
     enabled = true
+    logs = {
+      enabled = false
+    }
+    traces = {
+      enabled = false
+    }
   }
 }
 
@@ -39,7 +45,8 @@ resource "cloudflare_workers_deployment" "niks3_redirects_deployment" {
 }
 
 resource "cloudflare_workers_route" "niks3_redirects" {
-  zone_id = local.cf_zone_id
-  pattern = "${local.niks3_server_domain}/*"
-  script  = cloudflare_worker.niks3_redirects.name
+  for_each = local.workers_handled_paths
+  zone_id  = local.cf_zone_id
+  pattern  = "${local.niks3_server_domain}/${each.value}"
+  script   = cloudflare_worker.niks3_redirects.name
 }

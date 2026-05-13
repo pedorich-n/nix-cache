@@ -76,4 +76,10 @@ locals {
   niks3_oidc_json_base64 = base64encode(local.niks3_oidc_json)
 
   workers_script_path = "${path.module}/files/niks3_redirects.js"
+  workers_handled_paths = {
+    "root"    = ""
+    "sitemap" = "sitemap.xml"
+    "robots"  = "robots.txt"
+    "favicon" = "favicon.ico"
+  }
 }
