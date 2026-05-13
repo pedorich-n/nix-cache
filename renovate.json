@@ -6,7 +6,7 @@
       "customType": "jsonata",
       "fileFormat": "json",
       "description": "Container image in terraform template",
-      "managerFilePatterns": ["/^terraform/templates/container\\.json$/"],
+      "managerFilePatterns": ["/^terraform/files/container\\.json$/"],
       "datasourceTemplate": "docker",
       "matchStrings": [
         "{ \"depName\": image, \"packageName\": image , \"currentValue\": version,  \"registryUrl\": \"https://\" & (registry = \"docker.io\" ? \"index.docker.io\" : registry),  \"versioning\": versioning, \"currentDigest\": digest }"

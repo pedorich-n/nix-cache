@@ -6,7 +6,7 @@ output "r2_endpoint" {
 
 output "r2_public_domain" {
   description = "Public domain for the R2 bucket"
-  value       = local.r2_bucket_public_endpoint
+  value       = local.r2_bucket_public_domain
 }
 
 output "r2_bucket_name" {
