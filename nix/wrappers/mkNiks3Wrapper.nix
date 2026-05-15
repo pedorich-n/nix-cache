@@ -1,5 +1,6 @@
 {
   writeShellApplication,
+  opentofu,
   gitMinimal,
   niks3,
 }:
@@ -10,6 +11,7 @@ writeShellApplication {
   name = "niks3-${command}-wrapper";
 
   runtimeInputs = [
+    opentofu
     gitMinimal
     niks3
   ];
