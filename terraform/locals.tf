@@ -81,5 +81,7 @@ locals {
     "sitemap" = "sitemap.xml"
     "robots"  = "robots.txt"
     "favicon" = "favicon.ico"
+    "git"     = ".git*"
+    "env"     = ".env"
   }
 }

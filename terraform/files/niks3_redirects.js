@@ -8,6 +8,8 @@ const SITEMAP_XML = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </urlset>`;
 
+const PARTHS_TO_IGNORE = ["/.git", "/.env"];
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -44,6 +46,10 @@ export default {
           "Cache-Control": "public, max-age=86400",
         },
       });
+    }
+
+    if (PARTHS_TO_IGNORE.some((path) => pathname.startsWith(path))) {
+      return new Response("Not found", { status: 404 });
     }
 
     // Redirect root path to R2 bucket URL
