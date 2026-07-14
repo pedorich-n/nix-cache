@@ -11,6 +11,13 @@ jobs:
       - name: Setup job
         uses: pedorich-n/github-workflows/.github/actions/setup-nix-job@49b512bbb8bc337ceac27bee872950d6fa79cb2e # main
 
+      - name: Wake up the Niks3 server
+        shell: bash
+        env:
+          NIKS3_SERVER_URL: ${{ vars.NIKS3_SERVER_URL }}
+        run: |
+          curl --retry 5 --retry-delay 10 --retry-connrefused --fail --silent "${NIKS3_SERVER_URL}/health"
+
       - name: Run niks3 gc
         shell: bash
         env:
