@@ -5,5 +5,6 @@ resource "local_file" "fly_config" {
     image_version    = local.container_image_version
     app_name         = local.fly_app_name
     r2_bucket_region = local.r2_bucket_region
+    niks3_server_url = local.niks3_server_url
   })
 }
