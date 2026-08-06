@@ -1,5 +1,6 @@
 {
   inputs,
+  lib,
   ...
 }:
 {
@@ -9,6 +10,10 @@
 
   partitions.dev = {
     extraInputsFlake = ../dev;
+    extraInputs = {
+      nixpkgs = lib.mkForce inputs.nixpkgs;
+    };
+
     module = {
       imports = [
         ../dev/flake-module.nix

@@ -3,6 +3,7 @@
   bashInteractive,
   flyctl,
   gitMinimal,
+  niks3,
   opentofu,
 }:
 mkShellNoCC {
@@ -10,8 +11,9 @@ mkShellNoCC {
 
   buildInputs = [
     bashInteractive
-    gitMinimal
     flyctl
+    gitMinimal
+    niks3
     opentofu
   ];
 
