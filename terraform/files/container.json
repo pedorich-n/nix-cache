@@ -1,7 +1,7 @@
 {
   "image": "mic92/niks3",
   "registry": "ghcr.io",
-  "version": "v1.11.0",
-  "digest": "sha256:00d100f066c822569df0bed1dbf4a28cf90501ae6d297c5cb93a6ebbffef885d",
+  "version": "v1.14.2",
+  "digest": "sha256:d4c3ca5d6aa4e3b741408e0644c6220c78bf442ad74aca17ed3bdc6354d9d5c8",
   "versioning": "semver"
 }
