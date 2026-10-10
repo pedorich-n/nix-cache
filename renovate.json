@@ -12,5 +12,12 @@
         "{ \"depName\": image, \"packageName\": image , \"currentValue\": version,  \"registryUrl\": \"https://\" & (registry = \"docker.io\" ? \"index.docker.io\" : registry),  \"versioning\": versioning, \"currentDigest\": digest }"
       ]
     }
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": [ "docker" ],
+      "matchPackageNames": [ "mic92/niks3" ],
+      "sourceUrl": "https://github.com/mic92/niks3"
+    }
   ]
 }
