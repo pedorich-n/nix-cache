@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup job
-        uses: pedorich-n/github-workflows/.github/actions/setup-nix-job@bb33d0ebcd13cf82f4eac46e13b5d169fd8240e9 # main
+        uses: pedorich-n/github-workflows/.github/actions/setup-nix-job@d7787b19c4f1eb677b83449261a1ee070953d095 # main
 
       - name: Wake up the Niks3 server
         shell: bash
